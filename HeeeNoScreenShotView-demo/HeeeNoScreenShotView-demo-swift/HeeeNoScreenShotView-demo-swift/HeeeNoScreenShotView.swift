@@ -17,7 +17,11 @@ class HeeeNoScreenShotView: UIView {
   var clearView : UIView = {
     return UIView()
   }()
-  
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
   init() {
     super.init(frame: .zero)
     self.setupUI()
@@ -38,8 +42,19 @@ class HeeeNoScreenShotView: UIView {
       textField.subviews.first!.isUserInteractionEnabled = true
       textField.subviews.first!.addSubview(clearView)
     }
+      
+    NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
   }
   
+  @objc func keyboardWillShow() {
+      if (textField.isFirstResponder) {
+          textField.resignFirstResponder()
+          if textField.subviews.first != nil {
+            textField.subviews.first!.isUserInteractionEnabled = true
+          }
+      }
+  }
+    
   override func layoutSubviews() {
     super.layoutSubviews()
     textField.frame = self.bounds

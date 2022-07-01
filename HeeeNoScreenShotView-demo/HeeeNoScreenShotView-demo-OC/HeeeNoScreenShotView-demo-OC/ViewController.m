@@ -14,6 +14,10 @@
 
 @implementation ViewController
 
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    [self.view endEditing:YES];
+}
+
 - (void)viewDidLoad {
   [super viewDidLoad];
   
@@ -36,6 +40,11 @@
     privacyLabel.font = [UIFont systemFontOfSize:15];
     privacyLabel.text = @"隐私文字";
     [noScreenShotView addSubview:privacyLabel];
+      
+    UITextField *tf = [[UITextField alloc] initWithFrame:CGRectMake(10, 100, 160, 40)];
+    tf.placeholder = @"请输入文字...";
+    tf.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
+    [noScreenShotView addSubview:tf];
   }
 }
 

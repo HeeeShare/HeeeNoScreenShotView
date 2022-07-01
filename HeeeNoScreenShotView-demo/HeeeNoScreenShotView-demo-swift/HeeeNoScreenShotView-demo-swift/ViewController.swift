@@ -9,6 +9,10 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
   override func viewDidLoad() {
     super.viewDidLoad()
     
@@ -32,6 +36,11 @@ class ViewController: UIViewController {
       privacyLabel.font = .systemFont(ofSize: 15)
       privacyLabel.text = "隐私文字"
       noScreenShotView.addSubview(privacyLabel)
+        
+      let tf = UITextField.init(frame: .init(x: 10, y: 100, width: 160, height: 40))
+      tf.placeholder = "请输入文字..."
+      tf.backgroundColor = UIColor.init(white: 0.9, alpha: 1.0)
+      noScreenShotView.addSubview(tf);
     }
   }
   

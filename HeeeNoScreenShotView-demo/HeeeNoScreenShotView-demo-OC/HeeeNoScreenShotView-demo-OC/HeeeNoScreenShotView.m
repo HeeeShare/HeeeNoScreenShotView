@@ -14,6 +14,9 @@
 @end
 
 @implementation HeeeNoScreenShotView
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
 - (instancetype)init {
   self = [super init];
@@ -49,6 +52,14 @@
   [self addSubview:self.textField];
   self.textField.subviews.firstObject.userInteractionEnabled = YES;
   [self.textField.subviews.firstObject addSubview:self.clearView];
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+}
+
+- (void)keyboardWillShow:(NSNotification *)noti {
+    if (self.textField.isFirstResponder) {
+        [self.textField resignFirstResponder];
+        self.textField.subviews.firstObject.userInteractionEnabled = YES;
+    }
 }
 
 - (void)addSubview:(UIView *)view {
@@ -70,6 +81,7 @@
 - (UIView *)clearView {
   if (!_clearView) {
     _clearView = [[UIView alloc] init];
+    _clearView.backgroundColor = [UIColor clearColor];
   }
   
   return _clearView;
