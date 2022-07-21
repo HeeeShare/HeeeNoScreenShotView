@@ -42,7 +42,8 @@ class HeeeNoScreenShotView: UIView {
       textField.subviews.first!.isUserInteractionEnabled = true
       textField.subviews.first!.addSubview(clearView)
     }
-      
+    
+    NotificationCenter.default.removeObserver(self)
     NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
   }
   
@@ -59,6 +60,10 @@ class HeeeNoScreenShotView: UIView {
     super.layoutSubviews()
     textField.frame = self.bounds
     clearView.frame = self.bounds
+      
+    if (textField.superview != self) {
+        self.addSubview(textField)
+    }
   }
   
   override func addSubview(_ view: UIView) {

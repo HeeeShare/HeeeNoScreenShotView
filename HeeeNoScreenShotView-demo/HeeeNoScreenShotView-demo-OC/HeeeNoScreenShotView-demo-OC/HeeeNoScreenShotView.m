@@ -46,12 +46,17 @@
   [super layoutSubviews];
   self.textField.frame = self.bounds;
   self.clearView.frame = self.bounds;
+  
+  if (self.textField.superview != self) {
+      [self addSubview:self.textField];
+  }
 }
 
 - (void)setupUI {
   [self addSubview:self.textField];
   self.textField.subviews.firstObject.userInteractionEnabled = YES;
   [self.textField.subviews.firstObject addSubview:self.clearView];
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
 }
 
